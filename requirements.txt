@@ -1,2 +1,7 @@
-python_dotenv==1.0.0
-Flask==3.0.0
+numpy==1.26.4
+opencv-python==4.10.0.84
+matplotlib==3.9.2
+Pillow==11.0.0
+torch==2.5.1
+torchvision==0.20.1
+tqdm==1.4.4
