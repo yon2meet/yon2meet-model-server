@@ -1,4 +1,4 @@
-## 설치
+## 설치 및 실행
 
 ```sh
 apt-get install libgl1
@@ -7,7 +7,7 @@ python -m pip install -r requirements.txt
 flask --app=application run --host=0.0.0.0 --port=8080
 ```
 
-## 사용
+## API 호출
 
 ```sh
 curl -X POST -F "file=@data_img/IMG_4844.JPG" -H "Content-Type: multipart/form-data" localhost:8080/image
