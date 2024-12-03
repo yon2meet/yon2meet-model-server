@@ -1,34 +1,31 @@
-import io
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, send_file, request
+from flask import Flask, request
+from werkzeug.utils import secure_filename
 
-from model import model
+from timetable_analyzer import analyze_timetable
 
 load_dotenv()
 
 SERVER_PORT = int(os.environ.get('SERVER_PORT'))
 
 application = Flask(__name__)
+application.config['UPLOAD_FOLDER'] = './uploads'
 
 
-@application.post("/image")
+@application.route("/image", methods=['POST'])
 def image():
-    prompt = request.json["prompt"]  # TODO currently file name
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    path = os.path.join(application.config['UPLOAD_FOLDER'], filename)
+    file.save(path)
 
-    image_bytes = model(prompt)
+    schedule = analyze_timetable(path)
 
-    mem = io.BytesIO()
-    mem.write(image_bytes)
-    mem.seek(0)  # seeking was necessary. Python 3.5.2, Flask 0.12.2
+    result = sorted(schedule, key=lambda x: (x['day'], x['time']))
 
-    return send_file(
-        mem,
-        as_attachment=True,
-        download_name=prompt,
-        mimetype='image/jpeg'
-    )
+    return {"schedule": result}
 
 
 if __name__ == "__main__":
