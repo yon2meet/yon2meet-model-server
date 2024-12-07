@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request
 from werkzeug.utils import secure_filename
+from flask_cors import CORS
 
 from timetable_analyzer import analyze_timetable
 
@@ -12,6 +13,8 @@ SERVER_PORT = int(os.environ.get('SERVER_PORT'))
 
 application = Flask(__name__)
 application.config['UPLOAD_FOLDER'] = './uploads'
+
+CORS(application)
 
 
 @application.route("/image", methods=['POST'])

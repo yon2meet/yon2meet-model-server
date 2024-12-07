@@ -7,3 +7,4 @@ torchvision==0.20.1
 tqdm==4.62.3
 python-dotenv==0.19.1
 Flask==3.1.0
+flask-cors==5.0.0
